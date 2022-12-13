@@ -1,1 +1,35 @@
-<a>hello world</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <script>
+        const getNow = () => (Number(new Date()) - new Date(new Date().toLocaleDateString()).getTime()) - 12 * 3600000  //获取从0点到现在的秒数
+        const getHMS = (date) => {
+            const h = Math.floor(date / 3600000)
+            const m = Math.floor((date % 3600000) / 60000)
+            const s = Math.floor((date % 60000) /1000 )
+            const ms = date % 1000
+            return [h,m,s,ms]
+        }
+        const getTimeLeft = () => {
+            const morning =  42300000
+            const afternoon = 62100000
+            if(getNow() < morning){
+                return morning - getNow()
+            }else if (getNow() < afternoon){
+                return afternoon-getNow()
+            }else{
+                return 0
+            }
+        }
+        
+        const [h,m,s,ms] = getHMS(getTimeLeft())
+        
+    </script>
+</head>
+<body>
+</body>
+</html>
