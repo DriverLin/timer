@@ -1,44 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title></title>
-    <script>
-        const getNow = () => (Number(new Date()) - new Date(new Date().toLocaleDateString()).getTime()) - 12 * 3600000  //获取从0点到现在的秒数
-        const getHMS = (date) => {
-            const h = Math.floor(date / 3600000)
-            const m = Math.floor((date % 3600000) / 60000)
-            const s = Math.floor((date % 60000) /1000 )
-            const ms = date % 1000
-            return [h,m,s,ms]
-        }
-        const getTimeLeft = () => {
-            const morning =  42300000
-            const afternoon = 62100000
-            if(getNow() < morning){
-                return morning - getNow()
-            }else if (getNow() < afternoon){
-                return afternoon-getNow()
-            }else{
-                return 0
-            }
-        }
-        
-        const [h,m,s,ms] = getHMS(getTimeLeft())
-    </script>
-</head>
-<body>
-    <div class="BG">
 
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            border: 0;
+            outline: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0px;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .BG {
+            width: 100%;
+            height: 100%;
+            background: black url(default.jpg) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            background-size: cover;
+        }
+
+        .cover {
+            position: fixed;
+            right: 120px;
+            bottom: 120px;
+            width: auto;
+            height: auto;
+        }
+
+        .clock {
+            width: auto;
+            height: auto;
+        }
+
+        #clock h2 {
+            position: relative;
+            display: block;
+            color: #fff;
+            text-align: center;
+            margin: 10px 0;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.4em;
+            font-size: 0.7em;
+        }
+
+        #clock #time {
+            display: flex;
+        }
+
+        #clock #time div {
+            position: relative;
+            margin: 0 5px;
+            -webkit-box-reflect: below 1px linear-gradient(transparent, #0004);
+        }
+
+        #clock #time div span {
+            position: relative;
+            display: block;
+            width: 100px;
+            height: 80px;
+            background: #2196f3;
+            color: #fff;
+            font-weight: 300;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3em;
+            z-index: 10;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, .2);
+        }
+
+        #clock #time div span:nth-child(2) {
+            height: 30px;
+            font-size: 0.7em;
+            letter-spacing: 0.2em;
+            font-weight: 500;
+            z-index: 9;
+            box-shadow: none;
+            background: #127fd6;
+            text-transform: uppercase;
+        }
+
+        #clock #time div:last-child span {
+            background: #ff006a;
+        }
+
+        #clock #time div:last-child span:nth-child(2) {
+            background: #ec0062;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="BG" id="BG">
     </div>
     <div class="time">
         <div class="cover">
-            <div class="clock">
-
+            <div class="clock" id="clock">
+                <div id="time">
+                    
+                    <div><span id="hour">00</span><span>Hours</span></div>
+                    <div><span id="minutes">00</span><span>Minutes</span></div>
+                    <div><span id="seconds">00</span><span>Seconds</span></div>
+                </div>
             </div>
         </div>
     </div>
 </body>
+<script>
+    const getNow = () => (Number(new Date()) - new Date(new Date().toLocaleDateString()).getTime()) //- 12 * 3600000  //获取从0点到现在的秒数
+    const getHMS = (date) => {
+        const h = Math.floor(date / 3600000)
+        const m = Math.floor((date % 3600000) / 60000)
+        const s = Math.floor((date % 60000) / 1000)
+        const ms = date % 1000
+        return [h, m, s, ms]
+    }
+    const getTimeLeft = () => {
+        const morning = 42300000
+        const afternoon = 62100000
+        if (getNow() < morning) {
+            return morning - getNow()
+        } else if (getNow() < afternoon) {
+            return afternoon - getNow()
+        } else {
+            return 0
+        }
+    }
+    const hour = document.getElementById("hour")
+    const minutes = document.getElementById("minutes")
+    const seconds = document.getElementById("seconds")
+
+    setInterval(() => {
+        const [h, m, s, ms] = getHMS(getTimeLeft())
+        hour.innerHTML = h
+        minutes.innerHTML = m
+        seconds.innerHTML = s
+        console.log(h, m, s, ms)
+    }, 100)
+
+
+    window.wallpaperPropertyListener = {
+    applyUserProperties: function(properties) {
+        if (properties.bgfile) {
+            if( properties.bgfile.value === "" ){
+                document.getElementById("BG").style.backgroundImage = "url('default.jpg')";
+            }else{
+                document.getElementById("BG").style.backgroundImage = "url('file:///" + properties.bgfile.value + "')";
+            }
+        }
+    },
+};
+
+</script>
+
 </html>
