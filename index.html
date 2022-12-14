@@ -43,7 +43,7 @@
             height: auto;
         }
 
-       
+
         #clock #time {
             display: flex;
         }
@@ -138,21 +138,20 @@
         minutes.innerHTML = m
         seconds.innerHTML = s
         milliseconds.innerHTML = Math.floor(ms / 10)
-        // console.log(h, m, s, ms)
     }, 1000 / 60)
 
 
     window.wallpaperPropertyListener = {
-    applyUserProperties: function(properties) {
-        if (properties.bgfile) {
-            if( properties.bgfile.value === "" ){
-                document.getElementById("BG").style.backgroundImage = "url('default.jpg')";
-            }else{
-                document.getElementById("BG").style.backgroundImage = "url('file:///" + properties.bgfile.value + "')";
+        applyUserProperties: function (properties) {
+            if (properties.bgfile) {
+                if (properties.bgfile.value === "") {
+                    document.getElementById("BG").style.backgroundImage = "url('default.jpg')";
+                } else {
+                    document.getElementById("BG").style.backgroundImage = "url('file:///" + properties.bgfile.value + "')";
+                }
             }
-        }
-    },
-};
+        },
+    };
 
 </script>
 
