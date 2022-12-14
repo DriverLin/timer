@@ -43,18 +43,7 @@
             height: auto;
         }
 
-        #clock h2 {
-            position: relative;
-            display: block;
-            color: #fff;
-            text-align: center;
-            margin: 10px 0;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.4em;
-            font-size: 0.7em;
-        }
-
+       
         #clock #time {
             display: flex;
         }
@@ -92,11 +81,11 @@
             text-transform: uppercase;
         }
 
-        #clock #time div:last-child span {
+        #clock #time div:nth-child(3) span {
             background: #ff006a;
         }
 
-        #clock #time div:last-child span:nth-child(2) {
+        #clock #time div:nth-child(3) span:nth-child(2) {
             background: #ec0062;
         }
     </style>
@@ -109,10 +98,10 @@
         <div class="cover">
             <div class="clock" id="clock">
                 <div id="time">
-                    
                     <div><span id="hour">00</span><span>Hours</span></div>
                     <div><span id="minutes">00</span><span>Minutes</span></div>
                     <div><span id="seconds">00</span><span>Seconds</span></div>
+                    <div><span id="milliseconds">00</span><span>ms</span></div>
                 </div>
             </div>
         </div>
@@ -141,14 +130,16 @@
     const hour = document.getElementById("hour")
     const minutes = document.getElementById("minutes")
     const seconds = document.getElementById("seconds")
+    const milliseconds = document.getElementById("milliseconds")
 
     setInterval(() => {
         const [h, m, s, ms] = getHMS(getTimeLeft())
         hour.innerHTML = h
         minutes.innerHTML = m
         seconds.innerHTML = s
-        console.log(h, m, s, ms)
-    }, 100)
+        milliseconds.innerHTML = Math.floor(ms / 10)
+        // console.log(h, m, s, ms)
+    }, 1000 / 60)
 
 
     window.wallpaperPropertyListener = {
